@@ -29,17 +29,9 @@ enum {
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
+  [TD_A_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_A, KC_ESC),
   [TD_SPC_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_COLON),
 };
-
-// Custom keycodes for layer keys
-// Dual function escape with left command
-#define KC_LGESC LGUI_T(KC_ESC)
-#define KC_ALT_TAB RALT_T(KC_TAB) 
-#define KC_SPC_CLN TD(TD_SPC_CLN)
-#define KC_ENT_CTL RCTL_T(KC_ENT)
-#define KC_RAISE_DEL LT(2, KC_BSPC)
-#define KC_ADJ_DEL LT(3, KC_BSPC)
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -49,53 +41,56 @@ enum custom_keycodes {
   RGBRST,
   KC_RACL // right alt / colon
 };
+// Custom keycodes for layer keys
+// Dual function escape with left command
+#define KC_LGESC LGUI_T(KC_ESC)
+#define KC_ALT_TAB RALT_T(KC_TAB) 
+#define KC_SPC_CLN TD(TD_SPC_CLN)
+#define KC_ENT_CTL RCTL_T(KC_ENT)
+#define KC_RAISE_DEL LT(2, KC_BSPC)
+#define KC_ADJ_DEL LT(3, KC_BSPC)
+#define KC_A_ESC TD(TD_A_ESC)
+
+#define L_THMB_0 LGUI_T(KC_ESC) 
+/* #define L_THMB_1 KC_LSFT */
+#define L_THMB_2 KC_LSFT
+
+#define R_THMB_0 KC_ALT_TAB
+/* #define R_THMB_1 KC_LSFT */
+#define R_THMB_2 KC_SPC_CLN
+
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
-     KC_Q,  KC_W,  KC_E,          KC_R,   KC_T,                                          KC_Y,           KC_U,      KC_I,      KC_O,     KC_P, 
-     KC_A,  KC_S,  KC_D,  LSFT_T(KC_F),   KC_G,                                          KC_H,   LSFT_T(KC_J),      KC_K,      KC_L,  KC_QUOT,
-     KC_Z,  KC_X,  KC_C,          KC_V,   KC_B,                                          KC_N,           KC_M,   KC_COMM,    KC_DOT,  KC_SLSH,
-                              KC_LGESC,  LOWER, KC_ENT_CTL,         KC_SPC_CLN,  KC_RAISE_DEL,     KC_ALT_TAB 
+         KC_Q,  KC_W,  KC_E,     KC_R,   KC_T,                                          KC_Y,           KC_U,      KC_I,      KC_O,       KC_P, 
+     KC_A_ESC,  KC_S,  KC_D,     KC_F,   KC_G,                                          KC_H,           KC_J,      KC_K,      KC_L,    KC_BSPC,
+ RCTL_T(KC_Z),  KC_X,  KC_C,     KC_V,   KC_B,                                          KC_N,           KC_M,   KC_COMM,    KC_DOT, KC_ENT_CTL,
+                              L_THMB_0,  LOWER, L_THMB_2,            R_THMB_2,  KC_RAISE_DEL,       R_THMB_0 
   ),
 
   [_LOWER] = LAYOUT_split_3x5_3(
-    KC_1,   KC_2,     KC_3,     KC_4,             KC_5,                                  KC_6,           KC_7,      KC_8,      KC_9,   KC_0,
-    KC_NO,  KC_MS_L,  KC_MS_D,  LSFT_T(KC_MS_U),  KC_MS_R,                            KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
-    KC_NO,  KC_BTN2,  KC_WH_D,  KC_WH_U,          KC_BTN1,                            KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
-                                KC_LGESC,         LOWER,  KC_ENT_CTL,              KC_SPC_CLN,     KC_ADJ_DEL, KC_ALT_TAB 
+    KC_1,   KC_2,     KC_3,     KC_4,        KC_5,                                  KC_6,           KC_7,      KC_8,      KC_9,   KC_0,
+    KC_NO,  KC_MS_L,  KC_MS_D,  KC_MS_U,     KC_MS_R,                            KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_QUOT,
+    KC_NO,  KC_BTN2,  KC_WH_D,  KC_WH_U,     KC_BTN1,                            KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_SLSH,
+                               L_THMB_0,     LOWER,  L_THMB_2,      R_THMB_2, KC_ADJ_DEL,       R_THMB_0 
   ),
 
   [_RAISE] = LAYOUT_split_3x5_3(
     KC_EXLM,  KC_AT,  KC_HASH,    KC_DLR,   KC_PERC,                                  KC_CIRC,         KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN,
-    KC_NO,    KC_NO,  KC_NO,      KC_LSFT,  KC_NO,                                    KC_MINS,  LSFT_T(KC_EQL),  KC_LCBR, KC_RCBR, KC_PIPE,
+    KC_NO,    KC_NO,  KC_NO,      KC_NO,    KC_NO,                                    KC_MINS,          KC_EQL,  KC_LCBR, KC_RCBR, KC_PIPE,
     KC_GRV,   KC_NO,  KC_NO,      KC_NO,    KC_NO,                                    KC_UNDS,         KC_PLUS,  KC_LBRC, KC_RBRC, KC_BSLS,
-                                  KC_LGESC, ADJUST,  KC_ENT_CTL,   KC_SPC_CLN, LT(2, KC_BSPC),      KC_ALT_TAB 
+                                 L_THMB_0, ADJUST,  L_THMB_2,        R_THMB_2, LT(2, KC_BSPC),        R_THMB_0 
   ),
 
   [_ADJUST] = LAYOUT_split_3x5_3(
     RGBRST, KC_NO, KC_BRID, KC_BRIU, KC_NO,                                KC_MPRV,     KC_PAUSE,     KC_MUTE, KC_MNXT, KC_NO,
     KC_F1,  KC_F2, KC_F3,     KC_F4, KC_F5,                               KC_PAUSE,  KC__VOLDOWN,   KC__VOLUP,   KC_NO, KC_NO,
     KC_F6,  KC_F7, KC_F8,     KC_F9,KC_F10,                                  KC_NO,      KC_BRID,     KC_BRIU,   KC_NO, KC_NO,
-                           KC_LGESC, LOWER, KC_ENT_CTL, KC_SPC_CLN, LT(2, KC_BSPC),   KC_ALT_TAB
+                            L_THMB_0, LOWER, L_THMB_2,    R_THMB_2, LT(2, KC_BSPC),     R_THMB_0 
   ),
 };
 
-int RGB_current_mod;
-
-// Setting ADJUST layer RGB back to default
-void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
-  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
-    layer_on(layer3);
-  } else {
-    layer_off(layer3);
-  }
-}
-
-void matrix_init_user(void) {
-    #ifdef RGBLIGHT_ENABLE
-      RGB_current_mode = rgblight_config.mode;
-    #endif
-}
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
@@ -326,19 +321,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        /* update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
       } else {
         layer_off(_LOWER);
-        /* update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
       }
       return false;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        /* update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
       } else {
         layer_off(_RAISE);
-        /* update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST); */
       }
       return false;
     case ADJUST:
@@ -359,34 +350,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
         }
         return false;
-    case RGBRST:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          eeconfig_update_rgblight_default();
-          rgblight_enable();
-          RGB_current_mode = rgblight_config.mode;
-        }
-      #endif
-      #ifdef RGB_MATRIX_ENABLE
-        if (record->event.pressed) {
-          eeconfig_update_rgb_matrix_default();
-          rgb_matrix_enable();
-        }
-      #endif
-      break;
   }
   return true;
 }
-
-#ifdef RGB_MATRIX_ENABLE
-
-void suspend_power_down_keymap(void) {
-    rgb_matrix_set_suspend_state(true);
-}
-
-void suspend_wakeup_init_keymap(void) {
-    rgb_matrix_set_suspend_state(false);
-}
-
-#endif
 
