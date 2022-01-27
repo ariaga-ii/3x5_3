@@ -1,5 +1,5 @@
-# Soundmonster's layout for Corne
-
+# QMK keymap for Corne
+based on (soundmonster's)[https://github.com/qmk/qmk_firmware/tree/master/keyboards/crkbd/keymaps/soundmonster] from the main qmk repo
 Features:
 
 * Modern OLED support (many thanks to @drashna):
