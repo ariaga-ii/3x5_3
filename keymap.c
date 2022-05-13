@@ -17,37 +17,40 @@ static uint32_t oled_timer = 0;
 // entirely and just use numbers.   
 enum layers {
   _QWERTY,
-  _LOWER,
-  _RAISE,
+  _NAV,
+  _SYM,
   _ADJUST,
 };
 
 enum {
   TD_Q_TAB,
   TD_A_ESC,
-  TD_SPC_CLN
+  TD_SPC_CLN,
+  TD_SCLN_CLN,
+  TD_SLSH_Q
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_A_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_A, KC_ESC),
   [TD_SPC_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_SPC, KC_COLON),
+  [TD_SCLN_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
+  [TD_SLSH_Q] = ACTION_TAP_DANCE_DOUBLE(KC_SLSH, KC_QUES)
 };
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
-  LOWER,
-  RAISE,
+  NAV,
+  SYM,
   ADJUST,
-  RGBRST,
-  KC_RACL // right alt / colon
 };
 // Custom keycodes for layer keys
 // Dual function escape with left command
+#define DEL 
 #define KC_LGESC LGUI_T(KC_ESC)
 #define KC_ALT_TAB RALT_T(KC_TAB) 
 #define KC_SPC_CLN TD(TD_SPC_CLN)
 #define KC_ENT_CTL RCTL_T(KC_ENT)
-#define KC_RAISE_DEL LT(2, KC_BSPC)
+#define KC_SYM_DEL LT(2, KC_BSPC)
 #define KC_ADJ_DEL LT(3, KC_BSPC)
 #define KC_A_ESC TD(TD_A_ESC)
 
@@ -56,7 +59,7 @@ enum custom_keycodes {
 #define L_THMB_2 KC_LSFT
 
 #define R_THMB_0 KC_ALT_TAB
-/* #define R_THMB_1 KC_LSFT */
+/* #define R_THMB_1 KC_  */
 #define R_THMB_2 KC_SPC_CLN
 
 
@@ -65,30 +68,31 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
          KC_Q,  KC_W,  KC_E,     KC_R,   KC_T,                                          KC_Y,           KC_U,      KC_I,      KC_O,       KC_P, 
-     KC_A_ESC,  KC_S,  KC_D,     KC_F,   KC_G,                                          KC_H,           KC_J,      KC_K,      KC_L,    KC_BSPC,
+     KC_A_ESC,  KC_S,  KC_D,     KC_F,   KC_G,                                          KC_H,           KC_J,      KC_K,      KC_L,    KC_QUOT,
  RCTL_T(KC_Z),  KC_X,  KC_C,     KC_V,   KC_B,                                          KC_N,           KC_M,   KC_COMM,    KC_DOT, KC_ENT_CTL,
-                              L_THMB_0,  LOWER, L_THMB_2,            R_THMB_2,  KC_RAISE_DEL,       R_THMB_0 
+                             L_THMB_0,  NAV, L_THMB_2,                   R_THMB_2, KC_SYM_DEL,        R_THMB_0 
   ),
 
-  [_LOWER] = LAYOUT_split_3x5_3(
+  [_NAV] = LAYOUT_split_3x5_3(
     KC_1,   KC_2,     KC_3,     KC_4,        KC_5,                                  KC_6,           KC_7,      KC_8,      KC_9,   KC_0,
-    KC_NO,  KC_MS_L,  KC_MS_D,  KC_MS_U,     KC_MS_R,                            KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_QUOT,
-    KC_NO,  KC_BTN2,  KC_WH_D,  KC_WH_U,     KC_BTN1,                            KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_SLSH,
-                               L_THMB_0,     LOWER,  L_THMB_2,      R_THMB_2, KC_ADJ_DEL,       R_THMB_0 
+    KC_NO,  KC_MS_L,  KC_MS_D,  KC_MS_U,     KC_MS_R,                            KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  TD(TD_SCLN_CLN),
+    KC_NO,  KC_BTN2,  KC_WH_D,  KC_WH_U,     KC_BTN1,                            KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  TD(TD_SLSH_Q),
+                               L_THMB_0,     NAV,  L_THMB_2,      R_THMB_2,   KC_ADJ_DEL,       R_THMB_0 
   ),
 
-  [_RAISE] = LAYOUT_split_3x5_3(
+  /* SYMBOL LAYER  */
+  [_SYM] = LAYOUT_split_3x5_3(
     KC_EXLM,  KC_AT,  KC_HASH,    KC_DLR,   KC_PERC,                                  KC_CIRC,         KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN,
     KC_NO,    KC_NO,  KC_NO,     KC_BSLS,   KC_SLSH,                                  KC_MINS,          KC_EQL,  KC_LCBR, KC_RCBR, KC_PIPE,
     KC_GRV,   KC_NO,  KC_NO,     KC_SCLN,   KC_QUOT,                                  KC_UNDS,         KC_PLUS,  KC_LBRC, KC_RBRC, KC_BSLS,
-                                 L_THMB_0, ADJUST,  L_THMB_2,        R_THMB_2, LT(2, KC_BSPC),        R_THMB_0 
+                                 L_THMB_0,  ADJUST,  L_THMB_2,        R_THMB_2,    KC_SYM_DEL,        R_THMB_0 
   ),
 
   [_ADJUST] = LAYOUT_split_3x5_3(
-    RGBRST, KC_NO, KC_BRID, KC_BRIU, KC_NO,                                KC_MPRV,     KC_PAUSE,     KC_MUTE, KC_MNXT, KC_NO,
+    KC_NO, KC_NO, KC_BRID, KC_BRIU, KC_NO,                                 KC_MPRV,     KC_PAUSE,     KC_MUTE, KC_MNXT, KC_NO,
     KC_F1,  KC_F2, KC_F3,     KC_F4, KC_F5,                               KC_PAUSE,  KC__VOLDOWN,   KC__VOLUP,   KC_NO, KC_NO,
     KC_F6,  KC_F7, KC_F8,     KC_F9,KC_F10,                                  KC_NO,      KC_BRID,     KC_BRIU,   KC_NO, KC_NO,
-                            L_THMB_0, LOWER, L_THMB_2,    R_THMB_2, LT(2, KC_BSPC),     R_THMB_0 
+                            L_THMB_0, NAV, L_THMB_2,    R_THMB_2, SYM,     R_THMB_0 
   ),
 };
 
@@ -246,11 +250,11 @@ void render_layer_state(void) {
         0x20, 0x94, 0x95, 0x96, 0x20,
         0x20, 0xb4, 0xb5, 0xb6, 0x20,
         0x20, 0xd4, 0xd5, 0xd6, 0x20, 0};
-    static const char PROGMEM raise_layer[] = {
+    static const char PROGMEM SYM_layer[] = {
         0x20, 0x97, 0x98, 0x99, 0x20,
         0x20, 0xb7, 0xb8, 0xb9, 0x20,
         0x20, 0xd7, 0xd8, 0xd9, 0x20, 0};
-    static const char PROGMEM lower_layer[] = {
+    static const char PROGMEM NAV_layer[] = {
         0x20, 0x9a, 0x9b, 0x9c, 0x20,
         0x20, 0xba, 0xbb, 0xbc, 0x20,
         0x20, 0xda, 0xdb, 0xdc, 0x20, 0};
@@ -260,10 +264,10 @@ void render_layer_state(void) {
         0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
     if(layer_state_is(_ADJUST)) {
         oled_write_P(adjust_layer, false);
-    } else if(layer_state_is(_LOWER)) {
-        oled_write_P(lower_layer, false);
-    } else if(layer_state_is(_RAISE)) {
-        oled_write_P(raise_layer, false);
+    } else if(layer_state_is(_NAV)) {
+        oled_write_P(NAV_layer, false);
+    } else if(layer_state_is(_SYM)) {
+        oled_write_P(SYM_layer, false);
     } else {
         oled_write_P(default_layer, false);
     }
@@ -316,21 +320,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     // set_timelog();
   }
-  static uint16_t my_colon_timer;
 
   switch (keycode) {
-    case LOWER:
+    case NAV:
       if (record->event.pressed) {
-        layer_on(_LOWER);
+        layer_on(_NAV);
       } else {
-        layer_off(_LOWER);
+        layer_off(_NAV);
       }
       return false;
-    case RAISE:
+    case SYM:
       if (record->event.pressed) {
-        layer_on(_RAISE);
+        layer_on(_SYM);
       } else {
-        layer_off(_RAISE);
+        layer_off(_SYM);
       }
       return false;
     case ADJUST:
@@ -338,17 +341,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_on(_ADJUST);
         } else {
           layer_off(_ADJUST);
-        }
-        return false;
-    case KC_RACL:
-        if (record->event.pressed) {
-          my_colon_timer = timer_read();
-          register_code(KC_RALT);
-        } else {
-          unregister_code(KC_RALT);
-          if (timer_elapsed(my_colon_timer) < TAPPING_TERM) {
-            SEND_STRING(":"); // Change the character(s) to be sent on tap here
-          }
         }
         return false;
   }
