@@ -18,7 +18,7 @@ static uint32_t oled_timer = 0;
 enum layers {
   _QWERTY,
   _NAV,
-  _SYM,_ADJUST,
+  _SYM
 };
 
 enum {
@@ -40,14 +40,9 @@ enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   NAV,
   SYM,
-  ADJUST,
-  /* NAV_LAYER_TAP, */
-  COLON,
+  COLON
 };
 
-// Custom keycodes for layer keys
-// Dual function escape with left command
-#define DEL 
 #define KC_LGESC LGUI_T(KC_ESC)
 #define KC_ALT_TAB RALT_T(KC_TAB) 
 #define KC_SPC_CLN TD(TD_SPC_CLN)
@@ -56,15 +51,13 @@ enum custom_keycodes {
 #define KC_ADJ_DEL LT(3, KC_BSPC)
 #define KC_A_ESC TD(TD_A_ESC)
 
-/* #define L_THMB_0 LGUI_T(KC_ESC)  */
-/* #define L_THMB_0 S(KC_TAB) */
 #define L_THMB_0 KC_LSFT
-/* #define L_THMB_1 KC_LSFT */
 #define L_THMB_2 LGUI_T(KC_ESC)
 
 #define R_THMB_0 KC_ALT_TAB
-/* #define R_THMB_1 KC_  */
 #define R_THMB_2 KC_SPC_CLN
+
+
 
 /*
   //┌────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬────┐
@@ -80,33 +73,26 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
-         KC_Q,  KC_W,  KC_E,     KC_R,   KC_T,                                          KC_Y,           KC_U,      KC_I,      KC_O,       KC_P, 
-         KC_A,  KC_S, LCTL_T(KC_D), LALT_T(KC_F), KC_G,                          KC_H,   RALT_T(KC_J), RCTL_T(KC_K), KC_L,    KC_QUOT,
-         KC_Z,  KC_X,  KC_C,     KC_V,   KC_B,                                          KC_N,           KC_M,   KC_COMM,    KC_DOT, KC_ENT,
-                             L_THMB_0,  NAV, L_THMB_2,                R_THMB_2, LT(2, KC_BSPC),       R_THMB_0 
+    KC_Q,  KC_W,  KC_E,                KC_R, KC_T,                                KC_Y,         KC_U,         KC_I,      KC_O,     KC_P, 
+    KC_A,  KC_S, LCTL_T(KC_D), LALT_T(KC_F), KC_G,                                KC_H, RALT_T(KC_J), RCTL_T(KC_K),      KC_L,  KC_QUOT,
+    KC_Z,  KC_X,  KC_C,                KC_V, KC_B,                                KC_N,         KC_M,      KC_COMM,    KC_DOT,   KC_ENT,
+                                   L_THMB_0,  NAV, L_THMB_2,    KC_SPC, LT(2, KC_BSPC),     R_THMB_0 
   ),
 
   [_NAV] = LAYOUT_split_3x5_3(
-    KC_1,   KC_2,     KC_3,     KC_4,        KC_5,                                  KC_6,           KC_7,      KC_8,      KC_9,   KC_0,
-    KC_NO,  KC_MS_L,  LCTL_T(KC_MS_D), LALT_T(KC_SCLN), KC_COLON,        KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  TD(TD_SCLN_CLN),
-    KC_NO,  KC_BTN2,  KC_QUES,  KC_BSLS,     KC_SLSH,                            KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  TD(TD_SLSH_Q),
-                               L_THMB_0,     NAV,  L_THMB_2,      R_THMB_2,   KC_BSPC,       R_THMB_0 
+    KC_NO,   KC_7,         KC_8,         KC_9, KC_PLUS,                            KC_6,           KC_7,      KC_8,      KC_9,  KC_0,
+    KC_NO,  KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                         KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
+    KC_0,   KC_1,        KC_2,          KC_3,  KC_EQL,                         KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
+                                    L_THMB_0,     NAV,  L_THMB_2,  R_THMB_2,   KC_BSPC,       R_THMB_0 
   ),
 
   /* SYMBOL LAYER  */
   [_SYM] = LAYOUT_split_3x5_3(
-    KC_EXLM,  KC_AT,  KC_HASH,    KC_DLR,   KC_PERC,                                  KC_CIRC,         KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN,
-    KC_NO,    KC_NO,  LCTL_T(KC_NO),     LALT_T(KC_BSLS),   KC_SLSH,          KC_MINS,  RALT_T(KC_EQL), RCTL_T(KC_LCBR), KC_RCBR, KC_PIPE,
-    KC_GRV,   KC_NO,  KC_NO,     KC_SCLN,   KC_QUOT,                                  KC_UNDS,         KC_PLUS,  KC_LBRC, KC_RBRC, KC_QUES,
-                                 L_THMB_0,  ADJUST,  L_THMB_2,        R_THMB_2,    KC_SYM_DEL,        R_THMB_0 
-  ),
-
-  [_ADJUST] = LAYOUT_split_3x5_3(
-    KC_NO, KC_NO, KC_BRID, KC_BRIU, KC_NO,                                 KC_MPRV,     KC_PAUSE,     KC_MUTE, KC_MNXT, KC_NO,
-    KC_F1,  KC_F2, KC_F3,     KC_F4, KC_F5,                               KC_PAUSE,  KC__VOLDOWN,   KC__VOLUP,   KC_NO, KC_NO,
-    KC_F6,  KC_F7, KC_F8,     KC_F9,KC_F10,                                  KC_NO,      KC_BRID,     KC_BRIU,   KC_NO, KC_NO,
-                            L_THMB_0, NAV, L_THMB_2,    R_THMB_2, SYM,     R_THMB_0 
-  ),
+    KC_EXLM,  KC_AT,  KC_HASH,    KC_DLR,   KC_PERC,                                  KC_CIRC,         KC_AMPR,  KC_ASTR,       KC_LPRN, KC_RPRN,
+    KC_NO,    KC_NO,  LCTL_T(KC_NO), LALT_T(KC_BSLS),   KC_SLSH,                      KC_MINS, RALT_T(KC_EQL), RCTL_T(KC_LCBR), KC_RCBR, KC_PIPE,
+    KC_GRV,   KC_NO,  KC_NO,     KC_SCLN,   KC_QUOT,                                  KC_UNDS,         KC_PLUS,  KC_LBRC,       KC_RBRC, KC_QUES,
+                                 L_THMB_0,  KC_NO,  L_THMB_2,        R_THMB_2,    KC_SYM_DEL,        R_THMB_0 
+  )
 };
 
 
@@ -271,13 +257,14 @@ void render_layer_state(void) {
         0x20, 0x9a, 0x9b, 0x9c, 0x20,
         0x20, 0xba, 0xbb, 0xbc, 0x20,
         0x20, 0xda, 0xdb, 0xdc, 0x20, 0};
-    static const char PROGMEM adjust_layer[] = {
-        0x20, 0x9d, 0x9e, 0x9f, 0x20,
-        0x20, 0xbd, 0xbe, 0xbf, 0x20,
-        0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
-    if(layer_state_is(_ADJUST)) {
-        oled_write_P(adjust_layer, false);
-    } else if(layer_state_is(_NAV)) {
+    /* static const char PROGMEM adjust_layer[] = { */
+    /*     0x20, 0x9d, 0x9e, 0x9f, 0x20, */
+    /*     0x20, 0xbd, 0xbe, 0xbf, 0x20, */
+    /*     0x20, 0xdd, 0xde, 0xdf, 0x20, 0}; */
+    /* if(layer_state_is(_ADJUST)) { */
+    /*     oled_write_P(adjust_layer, false); */
+    /* } else  */
+    if(layer_state_is(_NAV)) {
         oled_write_P(NAV_layer, false);
     } else if(layer_state_is(_SYM)) {
         oled_write_P(SYM_layer, false);
@@ -349,13 +336,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_SYM);
       }
       return false;
-    case ADJUST:
-      if (record->event.pressed) {
-        layer_on(_ADJUST);
-      } else {
-        layer_off(_ADJUST);
-      }
-      return false;
     case COLON:
       if (record->event.pressed) {
         SEND_STRING(":");
@@ -371,18 +351,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_NAV);
       }
       return false;
-
-    /* case NAV_LAYER_TAP: */
-    /*   if (record->tap.count && record->event.pressed) { */
-    /*     tap_code16(S(KC_TAB)); */
-    /*     return false; */
-    /*   } */
-    /*   else if (!record->tap.count && record->event.pressed) { */
-    /*     layer_on(_NAV); */
-    /*   } else { */
-    /*     layer_off(_NAV); */
-    /*   } */
-    /*   return false; */
 
   }
   return true;
