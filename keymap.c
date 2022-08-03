@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT_split_3x5_3(
-    KC_NO,   KC_7,         KC_8,         KC_9, KC_PLUS,                            KC_6,           KC_7,      KC_8,      KC_9,  KC_0,
+    LCAG(KC_T),   KC_7,         KC_8,         KC_9, KC_PLUS,                            KC_6,           KC_7,      KC_8,      KC_9,  KC_0,
     KC_NO,  KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                         KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
     KC_0,   KC_1,        KC_2,          KC_3,  KC_EQL,                         KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
                                     L_THMB_0,     NAV,  L_THMB_2,  R_THMB_2,   KC_BSPC,       R_THMB_0 
