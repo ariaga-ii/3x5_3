@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT_split_3x5_3(
-    LCAG(KC_T),   KC_7,         KC_8,         KC_9, KC_PLUS,                            KC_6,           KC_7,      KC_8,      KC_9,  KC_0,
+    LCAG(KC_T),   KC_7,         KC_8,         KC_9, KC_PLUS,                      KC_6,           KC_7,      KC_8,      KC_9,  KC_0,
     KC_NO,  KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                         KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
     KC_0,   KC_1,        KC_2,          KC_3,  KC_EQL,                         KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
                                     L_THMB_0,     NAV,  L_THMB_2,  R_THMB_2,   KC_BSPC,       R_THMB_0 
@@ -89,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* SYMBOL LAYER  */
   [_SYM] = LAYOUT_split_3x5_3(
     KC_EXLM,  KC_AT,  KC_HASH,    KC_DLR,   KC_PERC,                                  KC_CIRC,         KC_AMPR,  KC_ASTR,       KC_LPRN, KC_RPRN,
-    KC_NO,    KC_NO,  LCTL_T(KC_NO), LALT_T(KC_BSLS),   KC_SLSH,                      KC_MINS, RALT_T(KC_EQL), RCTL_T(KC_LCBR), KC_RCBR, KC_PIPE,
+    KC_NO,    KC_NO,  LCTL_T(KC_NO), LALT_T(KC_BSLS),   KC_SLSH,                      KC_MINS,  RALT_T(KC_EQL), RCTL_T(KC_LCBR), KC_RCBR, KC_PIPE,
     KC_GRV,   KC_NO,  KC_NO,     KC_SCLN,   KC_QUOT,                                  KC_UNDS,         KC_PLUS,  KC_LBRC,       KC_RBRC, KC_QUES,
-                                 L_THMB_0,  KC_NO,  L_THMB_2,        R_THMB_2,    KC_SYM_DEL,        R_THMB_0 
+                                 L_THMB_0,  KC_NO,  L_THMB_2,        R_THMB_2,     KC_SYM_DEL,        R_THMB_0 
   )
 };
 
