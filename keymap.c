@@ -40,7 +40,8 @@ enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   NAV,
   SYM,
-  COLON
+  COLON,
+  UPDIR
 };
 
 #define KC_LGESC LGUI_T(KC_ESC)
@@ -80,18 +81,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NAV] = LAYOUT_split_3x5_3(
-    LCAG(KC_T),   KC_7,         KC_8,         KC_9, KC_PLUS,                      KC_6,           KC_7,      KC_8,      KC_9,  KC_0,
-    KC_NO,  KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                         KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
-    KC_0,   KC_1,        KC_2,          KC_3,  KC_EQL,                         KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
+    LCAG(KC_T), KC_7,         KC_8,         KC_9, KC_PLUS,                       KC_SLSH,           KC_7,      KC_8,      KC_9,  KC_0,
+    KC_ASTR,    KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                        KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
+    KC_0,       KC_1,        KC_2,          KC_3,  KC_EQL,                         KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
                                     L_THMB_0,     NAV,  L_THMB_2,  R_THMB_2,   KC_BSPC,       R_THMB_0 
   ),
 
-  /* SYMBOL LAYER  */
+  /* SYMBOL LAYER 
+    KC_QUOT, KC_LABK, KC_RABK, KC_DQUO, KC_DOT ,
+    KC_EXLM, KC_MINS, KC_PLUS, KC_EQL , KC_HASH,
+    KC_CIRC, KC_SLSH, KC_ASTR, KC_BSLS, UPDIR,
+
+                      KC_AMPR, SCOPE  , KC_LBRC, KC_RBRC, KC_PERC, 
+                      KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
+                      KC_TILD, KC_DLR , KC_LCBR, KC_RCBR, KC_AT  ,
+   * */
   [_SYM] = LAYOUT_split_3x5_3(
-    KC_EXLM,  KC_AT,  KC_HASH,    KC_DLR,   KC_PERC,                                  KC_CIRC,         KC_AMPR,  KC_ASTR,       KC_LPRN, KC_RPRN,
-    KC_NO,    KC_NO,  LCTL_T(KC_NO), LALT_T(KC_BSLS),   KC_SLSH,                      KC_MINS,  RALT_T(KC_EQL), RCTL_T(KC_LCBR), KC_RCBR, KC_PIPE,
-    KC_GRV,   KC_NO,  KC_NO,     KC_SCLN,   KC_QUOT,                                  KC_UNDS,         KC_PLUS,  KC_LBRC,       KC_RBRC, KC_QUES,
-                                 L_THMB_0,  KC_NO,  L_THMB_2,        R_THMB_2,     KC_SYM_DEL,        R_THMB_0 
+    KC_QUOT,  KC_LABK,  KC_RABK,  KC_DQUO,   KC_DOT,                            KC_AMPR,  KC_SCLN,  KC_LBRC, KC_RBRC, KC_PERC,
+    KC_EXLM,  KC_MINS,  KC_PLUS,   KC_EQL, LALT(KC_3),                           KC_PIPE,  KC_COLN,  KC_LPRN, KC_RPRN, KC_QUES,
+    KC_GRV,   KC_SLSH,  KC_ASTR,  KC_BSLS,   UPDIR,                             KC_UNDS,   KC_DLR,  KC_LCBR, KC_RCBR, KC_AT,
+                                 L_THMB_0,   KC_NO,  L_THMB_2,     R_THMB_2, KC_SYM_DEL,  R_THMB_0 
   )
 };
 
@@ -341,6 +350,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(":");
       }
       return false;
+
+    case UPDIR:
+      if (record->event.pressed) {
+        SEND_STRING("../");
+      }
+      return false;
+
     case (LT(1, KC_TAB)):
       if (!record->tap.count && record->event.pressed) {
         tap_code16(S(KC_TAB));
@@ -351,6 +367,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_NAV);
       }
       return false;
+
 
   }
   return true;
