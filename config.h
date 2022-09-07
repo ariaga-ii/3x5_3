@@ -112,4 +112,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #   define DISABLE_RGB_MATRIX_SOLID_SPLASH
 #   define DISABLE_RGB_MATRIX_SOLID_MULTISPLASH
 #endif
-
+#ifdef CAPS_WORD_ENABLE 
+  #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+#endif

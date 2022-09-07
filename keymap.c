@@ -36,13 +36,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_SLSH_Q] = ACTION_TAP_DANCE_DOUBLE(KC_SLSH, KC_QUES)
 };
 
+
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   NAV,
   SYM,
   COLON,
-  UPDIR
+  UPDIR,
+  ARROW,
 };
+
 
 #define KC_LGESC LGUI_T(KC_ESC)
 #define KC_ALT_TAB RALT_T(KC_TAB) 
@@ -52,10 +55,10 @@ enum custom_keycodes {
 #define KC_ADJ_DEL LT(3, KC_BSPC)
 #define KC_A_ESC TD(TD_A_ESC)
 
-#define L_THMB_0 KC_LSFT
+/* #define L_THMB_0 KC_LSFT */
 #define L_THMB_2 LGUI_T(KC_ESC)
 
-#define R_THMB_0 KC_ALT_TAB
+#define R_THMB_0 KC_TAB
 #define R_THMB_2 KC_SPC_CLN
 
 
@@ -76,31 +79,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
     KC_Q,  KC_W,  KC_E,                KC_R, KC_T,                                KC_Y,         KC_U,         KC_I,      KC_O,     KC_P, 
     KC_A,  KC_S, LCTL_T(KC_D), LALT_T(KC_F), KC_G,                                KC_H, RALT_T(KC_J), RCTL_T(KC_K),      KC_L,  KC_QUOT,
-    KC_Z,  KC_X,  KC_C,                KC_V, KC_B,                                KC_N,         KC_M,      KC_COMM,    KC_DOT,   KC_ENT,
-                                   L_THMB_0,  NAV, L_THMB_2,    KC_SPC, LT(2, KC_BSPC),     R_THMB_0 
+    KC_Z,  KC_X,  KC_C,                KC_V, KC_B,                                KC_N,         KC_M,      KC_COMM,    KC_DOT,   KC_SLSH,
+                                   KC_LSFT,  NAV, L_THMB_2,    KC_SPC, LT(2, KC_BSPC),     R_THMB_0 
   ),
 
   [_NAV] = LAYOUT_split_3x5_3(
-    LCAG(KC_T), KC_7,         KC_8,         KC_9, KC_PLUS,                       KC_SLSH,           KC_7,      KC_8,      KC_9,  KC_0,
-    KC_ASTR,    KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                        KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
-    KC_0,       KC_1,        KC_2,          KC_3,  KC_EQL,                         KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
-                                    L_THMB_0,     NAV,  L_THMB_2,  R_THMB_2,   KC_BSPC,       R_THMB_0 
+    LCAG(KC_T), KC_7,         KC_8,         KC_9, KC_PLUS,                    KC_SLSH,           KC_7,      KC_8,      KC_9,  KC_0,
+    KC_ASTR,    KC_4, LCTL_T(KC_5), LALT_T(KC_6), KC_MINS,                    KC_LEFT,        KC_DOWN,     KC_UP,  KC_RIGHT,  KC_NO,
+    KC_0,       KC_1,        KC_2,          KC_3,  UPDIR,                     KC_HOME,        KC_PGDN,   KC_PGUP,    KC_END,  KC_NO,
+                          KC_LSFT,          NAV,  L_THMB_2,         KC_ENT,   KC_BSPC,       R_THMB_0 
   ),
 
-  /* SYMBOL LAYER 
-    KC_QUOT, KC_LABK, KC_RABK, KC_DQUO, KC_DOT ,
-    KC_EXLM, KC_MINS, KC_PLUS, KC_EQL , KC_HASH,
-    KC_CIRC, KC_SLSH, KC_ASTR, KC_BSLS, UPDIR,
-
-                      KC_AMPR, SCOPE  , KC_LBRC, KC_RBRC, KC_PERC, 
-                      KC_PIPE, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
-                      KC_TILD, KC_DLR , KC_LCBR, KC_RCBR, KC_AT  ,
-   * */
   [_SYM] = LAYOUT_split_3x5_3(
-    KC_QUOT,  KC_LABK,  KC_RABK,  KC_DQUO,   KC_DOT,                            KC_AMPR,  KC_SCLN,  KC_LBRC, KC_RBRC, KC_PERC,
-    KC_EXLM,  KC_MINS,  KC_PLUS,   KC_EQL, LALT(KC_3),                           KC_PIPE,  KC_COLN,  KC_LPRN, KC_RPRN, KC_QUES,
-    KC_GRV,   KC_SLSH,  KC_ASTR,  KC_BSLS,   UPDIR,                             KC_UNDS,   KC_DLR,  KC_LCBR, KC_RCBR, KC_AT,
-                                 L_THMB_0,   KC_NO,  L_THMB_2,     R_THMB_2, KC_SYM_DEL,  R_THMB_0 
+    KC_QUOT,  KC_LABK,    KC_RABK,  KC_DQUO,   KC_DOT,                            KC_AMPR,  KC_SCLN,  KC_LBRC, KC_RBRC, KC_EQL,
+    KC_EXLM,  LALT(KC_3), KC_PERC,  KC_PLUS,  KC_UNDS,                            KC_MINS,  KC_COLN,  KC_LPRN, KC_RPRN, KC_PIPE,
+    KC_GRV,   KC_ASTR,    KC_SLSH,  KC_BSLS,   ARROW,                               KC_AT,   KC_DLR,  KC_LCBR, KC_RCBR, KC_QUES,
+                                    KC_LSFT,   KC_BSPC,  L_THMB_2,     R_THMB_2, KC_SYM_DEL,  R_THMB_0 
   )
 };
 
@@ -304,11 +298,10 @@ void suspend_power_down_user() {
     oled_off();
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
   if (is_keyboard_master()) {
     if (timer_elapsed32(oled_timer) > 30000) {
       oled_off();
-      return;
     } else {
       oled_on();
     }
@@ -318,6 +311,7 @@ void oled_task_user(void) {
   } else {
     render_status_secondary();
   }
+  return false;
 }
 
 
@@ -329,6 +323,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     // set_timelog();
   }
+
+#ifndef NO_ACTION_ONESHOT
+  const bool shifted = (get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT;
+#else
+  const bool shifted = get_mods() & MOD_MASK_SHIFT;
+#endif  
 
   switch (keycode) {
     case NAV:
@@ -354,6 +354,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case UPDIR:
       if (record->event.pressed) {
         SEND_STRING("../");
+      }
+      return false;
+
+    case ARROW:
+      if (record->event.pressed) {
+        if (shifted) {
+          unregister_code(KC_LSFT);
+          SEND_STRING("=>");
+          register_code(KC_LSFT);
+        } else {
+          SEND_STRING("->");
+        }
       }
       return false;
 
